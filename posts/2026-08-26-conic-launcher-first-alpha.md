@@ -38,7 +38,7 @@ Conic Launcher 是一个我已经开发三年半的 Minecraft 启动器项目。
 
 <video autoplay loop muted playsinline src="/videos/deferred-install.mp4"></video>
 
-这个特性从项目最开始就是这样。起因是看到b站上居然有人对比启动器安装游戏的速度，我感到十分好笑。但转念一想，如果把安装推迟，不在创建实例时安装，那不就等于立刻安装完游戏了吗？（笑）不过其实官方启动器也是这个流程，把下载游戏和启动游戏合并为一个「开始游戏」按钮。
+这个特性从项目最开始就是这样。起因是看到 bilibili 上居然有人对比启动器安装游戏的速度，我感到十分好笑。但转念一想，如果把安装推迟，不在创建实例时安装，那不就等于立刻安装完游戏了吗？（笑）不过其实官方启动器也是这个流程，把下载游戏和启动游戏合并为一个「开始游戏」按钮。
 
 <video autoplay loop muted playsinline src="/videos/command-palette.mp4"></video>
 

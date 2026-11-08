@@ -12,7 +12,7 @@ tags:
     - Web
 ---
 
-[Let's Encrypt](https://letsencrypt.org/) 的免费证书只有90天有效期，你是否经常忘了续签？本文将手把手教你使用[Certbot](https://certbot.eff.org/) 并设置自动续签，一劳永逸解决证书过期问题。
+[Let's Encrypt](https://letsencrypt.org/) 的免费证书只有 90 天有效期，你是否经常忘了续签？本文将手把手教你使用[Certbot](https://certbot.eff.org/) 并设置自动续签，一劳永逸解决证书过期问题。
 
 不同于其他大多数文章，本文使用 Cloudflare 完成域名所有权验证，好处是 Certbot 与 Web 服务器不需要安装在同一个服务器，但要求域名必须托管在 Cloudflare 上。
 
@@ -75,7 +75,7 @@ const { isDark } = useData()
 
 ## 创建 Cloudflare 配置文件
 
-首先创建一个配置文件，用来保存 Cloudflare API 相关参数。将以下内容写入 `/etc/letsencrypt/cloudflare.conf` 中，dns_cloudflare_api_token后面改成上一步复制的 API 令牌。
+首先创建一个配置文件，用来保存 Cloudflare API 相关参数。将以下内容写入 `/etc/letsencrypt/cloudflare.conf` 中，dns_cloudflare_api_token 后面改成上一步复制的 API 令牌。
 
 ```ini
 dns_cloudflare_api_token = xxxxxxxxxxx
@@ -179,7 +179,7 @@ Congratulations, all simulated renewals succeeded:
  0 5 * * 1 certbot renew
 ```
 
-之后会在每周一凌晨五点检查过期时间，如果剩余小于30天则会更新证书。
+之后会在每周一凌晨五点检查过期时间，如果剩余小于 30 天则会更新证书。
 
 证书更新后，需要重启 Nginx。如果你的 Nginx 也运行在这里，你可以改用下面这行：
 

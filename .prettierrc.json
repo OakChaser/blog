@@ -5,6 +5,7 @@
     "useTabs": false,
     "singleQuote": false,
     "bracketSameLine": true,
+    "plugins": ["prettier-plugin-lint-md"],
     "overrides": [
         {
             "files": ["*.vue", "*.html", "*.yml"],

@@ -24,7 +24,7 @@ tags:
 
 ![](/img/Screenshot-2025-08-06-07-28-34.png)
 
-于是我在GitHub上搜索，不少人也有类似的感受，比如[这个](https://github.com/tauri-apps/tauri/discussions/13085)，里面的回答提到了可以把模块写成 Tauri 插件，于是我就产生了重构的想法。
+于是我在 GitHub 上搜索，不少人也有类似的感受，比如[这个](https://github.com/tauri-apps/tauri/discussions/13085)，里面的回答提到了可以把模块写成 Tauri 插件，于是我就产生了重构的想法。
 
 ## 背景知识
 
@@ -37,7 +37,8 @@ Tauri 框架的后端使用 Rust 语言编写，默认放在 src-tauri 目录里
 ### 给原来的模块搬家
 
 这是我原来的项目结构：
-```
+
+```plain
 conic-launcher/
 ├── package.json           # 前端依赖
 ├── src/                   # 前端源码
@@ -54,7 +55,7 @@ conic-launcher/
 │       └── version.rs     # version.json 文件解析与合并
 ```
 
-重构后，除了 main.rs，别的模块都被移动到单独的 crate，放在 `conic-launcher/crates` 目录中，并在项目根目录添加了 Cargo.toml文件：
+重构后，除了 main.rs，别的模块都被移动到单独的 crate，放在 `conic-launcher/crates` 目录中，并在项目根目录添加了 Cargo.toml 文件：
 
 ```toml
 [workspace]
@@ -95,11 +96,12 @@ serde_json = "1"
 
 ...
 ```
+
 这里面的 `workspace.dependencies` 定义了整个项目使用的依赖，在每个子 crate 里只需要添加 `xxx.workspace = true` 就可以了，这样就能做到整个项目使用同一个版本的依赖了。
 
 移动文件后，还需要为每个 crate 添加 Cargo.toml，包名就写以前的模块名就好了，然后项目结构变成这样：
 
-```
+```plain
 conic-launcher/
 ├── Cargo.toml
 ├── package.json
@@ -126,7 +128,9 @@ conic-launcher/
 │   ├── utils/
 │   └── ...
 ```
+
 然后我们需要为每个 crate 添加 `init` 函数，用来初始化插件：
+
 ```rust
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("config")
@@ -137,7 +141,9 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         .build()
 }
 ```
+
 然后把所有 `use` 改一下就好了
+
 ### 处理报错
 
 #### 循环依赖
@@ -150,6 +156,7 @@ package config v0.0.0 (/home/oakchaser/Desktop/conic-launcher/crates/config)
 ... which satisfies path dependency config (locked to 0.0.0) of package conic-launcher v0.0.0 (/home/oakchaser/Desktop/conic-launcher/src-tauri)
 ... which satisfies path dependency conic-launcher (locked to 0.0.0) of package config v0.0.0 (/home/oakchaser/Desktop/conic-launcher/crates/config)
 ```
+
 这显然是平常不注意项目结构导致的，主包中有一个全局状态的结构体，其中用到了`config` 包里的结构体，而 `config` 包又依赖主包的这个全局状态，所以造成了循环依赖，而在 Rust 项目中，包与包之间的依赖关系是不允许这样的，于是编译器报错。
 
 我这里的解决办法是：不再使用那个全局状态，因为我发现根本没必要，状态已经由前端通过 Pinia 管理了。
@@ -172,8 +179,10 @@ ported here
    = note: `__cmd__load_config_file` must be defined only o
 nce in the macro namespace of this module
 ```
+
 可是只有一处 `load_config_file` 呀，搜索了一下发现了这个：<https://github.com/tauri-apps/tauri/discussions/4665>
 所以前面不能有 `pub`，但是其他模块需要这些函数，于是我重新封装了这些命令：
+
 ```rust
 #[command]
 fn cmd_load_config_file() -> Config {
@@ -188,6 +197,7 @@ fn cmd_load_config_file() -> Config {
 ```log
 Unhandled Promise Rejection: config.cmd_load_config_file not allowed. Plugin not found
 ```
+
 这是因为在 Tauri 中，前端使用插件提供的命令需要手动允许权限，但是这样的话每个插件 crate 都需要有一个 `build.rs` 文件，而这个文件又要求插件必须有 `package.json`，但这样就太复杂了，有没有简单一点的方法呢？于是我找到了这个：<https://github.com/tauri-apps/tauri/discussions/9337>
 
 这里面说，可以把主 `crate` 的 `build.rs` 改一下，在里面声明内联插件，而插件 crate 里面不需要 `build.rs`。主包的 `build.rs` 我改成了这样：
@@ -216,6 +226,7 @@ fn main() {
     .unwrap();
 }
 ```
+
 这样就能自动生成权限文件了
 
 ### 封装 Typescript API
@@ -247,6 +258,7 @@ fn main() {
 ```
 
 然后修改 `vite.config.ts`
+
 ```typescript
 import { fileURLToPath, URL } from "node:url"
 
@@ -270,11 +282,13 @@ export default defineConfig({
     },
 })
 ```
+
 这样在前端的 Typescript 代码中就可以这样引入后端暴露的 API 了：
 
 ```typescript
 import { loadConfigFile } from "@conic/config"
 ```
+
 而且不需要每个 crate 里面都加一个 `package.json`。
 
 ## 收获

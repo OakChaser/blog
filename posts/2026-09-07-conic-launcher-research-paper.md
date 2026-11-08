@@ -64,7 +64,7 @@ OakChaser¹²\*，ConicMC 研究组²
 
 Conic Launcher 采用前后端分离的异构计算架构，如 Fig. 1 所示：
 
-```
+```plain
 ┌─────────────────────────────────────────────────────────┐
 │                    Frontend (Vue 3 + TypeScript)         │
 │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐   │
@@ -103,7 +103,7 @@ Conic Launcher 采用前后端分离的异构计算架构，如 Fig. 1 所示：
 
 系统前端采用 **osu! 风格的全屏视图切换范式**，通过 `navigationStore` 管理视图状态转移，定义如下状态转移函数：
 
-```
+```plain
 δ: View × Event → View
 
 其中 View ∈ {GameView, LaunchView, SettingsView, AccountsView, SetupWizard}
@@ -136,12 +136,12 @@ Event ∈ {NAVIGATE, BACK, RESET}
 
 **问题定义：** 给定用户请求的计算内核类型 τ ∈ {Vanilla, Fabric, Forge, NeoForge, Quilt}，系统需要从 N 个异构源中调度最优的依赖包集合 D*，使得：
 
-```
+```plain
 D* = argmin_D { Σ cost(d_i) | d_i ∈ D, resolve(D, τ) = ✓ }
        D
 ```
 
-其中 resolve(D, τ) 为约束满足函数，确保依赖图的拓扑一致性。
+其中 resolve（D, τ） 为约束满足函数，确保依赖图的拓扑一致性。
 
 **算法实现：** 我们设计了基于继承链遍历（Inheritance Chain Traversal）的依赖解析算法。对于 Forge/NeoForge 等需要执行外部安装器的内核，算法通过以下步骤实现：
 
@@ -158,7 +158,7 @@ D* = argmin_D { Σ cost(d_i) | d_i ∈ D, resolve(D, τ) = ✓ }
 
 系统实现了基于 **最少连接数（Least Connections）** 的镜像负载均衡算法。每个镜像维护一个原子计数器 C_m，表示当前活跃连接数。对于新下载任务，选择策略为：
 
-```
+```plain
 m* = argmin C_m
      m ∈ M_active
 ```
@@ -189,7 +189,7 @@ m* = argmin C_m
 
 **算法设计：** 我们提出了一种 **字节级时间戳解析算法（Byte-Level Timestamp Parser, BLTSP）**，绕过完整的 gzip 解压过程，在压缩字节流中直接定位 `[HH:MM:SS]` 格式的时间戳模式：
 
-```
+```plain
 Algorithm 1: BLTSP
 Input: Compressed log stream S
 Output: Total playtime T
@@ -215,7 +215,7 @@ Output: Total playtime T
 
 Conic Nexus 采用运行时动态链接库加载（Runtime Dynamic Library Loading）架构，核心安全流程如下：
 
-```
+```plain
 ┌──────────────┐    SHA-256     ┌──────────────┐    C ABI    ┌──────────┐
 │ .dll/.so/.dylib │ ──校验──→ │ libloading   │ ──加载──→  │ FFI 调用  │
 │ (libconic_nexus)│            │ (安全沙箱)    │            │ (P2P 网络)│
@@ -266,7 +266,7 @@ extern "C" {
 
 BeatMap 可视化组件实现了以下自适应算法：
 
-```
+```plain
 Algorithm 2: Adaptive FFT Sizing
 Input: desiredBars B, sampleRate R
 Output: fftSize N
@@ -483,4 +483,4 @@ strip = true
 
 ---
 
-_本论文由 ConicMC AI 辅助研究系统自动生成。所有实验数据均经过 AI 模型的严格审查，确保...好吧，以上数据全部是编的，但这个项目是真实存在的，而且确实很酷。_
+_本论文由 ConicMC AI 辅助研究系统自动生成。所有实验数据均经过 AI 模型的严格审查，确保。.。好吧，以上数据全部是编的，但这个项目是真实存在的，而且确实很酷。_

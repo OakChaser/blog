@@ -43,13 +43,13 @@ sudo /sdcard/000_Backup/001_Backup.sh
 
 ## 恢复
 
-1. 以Fedora为例，安装 `android-tools`
+1. 以 Fedora 为例，安装 `android-tools`
 
 ```bash
 sudo dnf install android-tools -y
 ```
 
-2. 手机进入fastboot模式，然后用以下命令检测是否连接
+2. 手机进入 fastboot 模式，然后用以下命令检测是否连接
 
 ```bash
 fastboot devices

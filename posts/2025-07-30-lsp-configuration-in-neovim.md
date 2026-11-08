@@ -19,11 +19,11 @@ Neovim 0.11 极大地简化了 LSP 配置。本文将带你一步步在 Neovim 
 
 如果你已经知道这是什么，请直接看下一部分。
 
-LSP 的全称是 Language Server Protocol，它是一个协议，定义了语言服务器应该如何与客户端交流。如果没有 LSP，语言提供者就不得不为每一个编辑器都编写一个插件，由于编辑器不同，他们不得不为每个编辑器实现一套这样的逻辑，每个编辑器同样需要自己实现一套协议。LSP出现后，每个编辑器只需要实现LSP的所有功能，语言提供者只需要编写一个语言服务器，就可以兼容所有编辑器。
+LSP 的全称是 Language Server Protocol，它是一个协议，定义了语言服务器应该如何与客户端交流。如果没有 LSP，语言提供者就不得不为每一个编辑器都编写一个插件，由于编辑器不同，他们不得不为每个编辑器实现一套这样的逻辑，每个编辑器同样需要自己实现一套协议。LSP 出现后，每个编辑器只需要实现 LSP 的所有功能，语言提供者只需要编写一个语言服务器，就可以兼容所有编辑器。
 
 其中，服务器负责接收编辑器的命令，并将结果返回给编辑器，LSP 在这里就规定了编辑器发送命令的方式，以及服务器进行回应的方式。
 
-我们看个例子，这里假设你的编辑器就是客户端：当你想跳转到某处，就像你在VS Code里按住Ctrl点击某个东西时那样，你的编辑器会问服务器这个东西的引用在哪里，请求看起来长这样：
+我们看个例子，这里假设你的编辑器就是客户端：当你想跳转到某处，就像你在 VS Code 里按住 Ctrl 点击某个东西时那样，你的编辑器会问服务器这个东西的引用在哪里，请求看起来长这样：
 
 ```json
 {
@@ -236,7 +236,7 @@ vim.keymap.set(
 require("lsp")
 ```
 
-接下来，你需要一个自动补全插件 [blink.cmp](https://github.com/Saghen/blink.cmp),和内置的相比，它有更智能的排序，以及更快的响应。下面给出我的配置，你可以按照官方文档自行配置，使它更贴合自己的使用习惯，这里推荐观看[帕特里柯基的视频](https://www.bilibili.com/video/BV1gDETzTEoo)。
+接下来，你需要一个自动补全插件 [blink.cmp](https://github.com/Saghen/blink.cmp)，和内置的相比，它有更智能的排序，以及更快的响应。下面给出我的配置，你可以按照官方文档自行配置，使它更贴合自己的使用习惯，这里推荐观看[帕特里柯基的视频](https://www.bilibili.com/video/BV1gDETzTEoo)。
 
 ```lua
 -- Lua/plugins/blink-cmp.lua
@@ -316,9 +316,9 @@ return {
 
 ## 3. Lua 配置
 
-由于我们正在使用Lua，那么就先进行Lua的配置吧。
+由于我们正在使用 Lua，那么就先进行 Lua 的配置吧。
 
-第一部分中我们讲过LSP的客户端和服务端是干什么的，因此这里的配置分为两部分
+第一部分中我们讲过 LSP 的客户端和服务端是干什么的，因此这里的配置分为两部分
 
 ### 3.1 客户端配置
 
@@ -343,7 +343,7 @@ return {
 
 这里的 `cmd` 就是语言服务器的可执行文件。在 0.11 版本中，我们不再需要 [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) 插件，但你还可以直接照抄里面的配置。
 
-将以下内容添加到 `~/.config/nvim/lua/lsp.lua` 以告诉Neovim你要启用这个配置：
+将以下内容添加到 `~/.config/nvim/lua/lsp.lua` 以告诉 Neovim 你要启用这个配置：
 
 ```lua
 vim.lsp.enable('lua_ls')
@@ -432,14 +432,14 @@ vim.lsp.enable('lua_ls')
 
 需要注意其中 `servers` 变量，你可以覆盖服务器的默认设置。插件会自动安装其中 `servers`, `formatting_tools`, `dap` 三个变量里面的工具，之后配置其他语言时，你可以自己往里添加。
 
-然后重启你的 Neovim。重启后，运行 `:Mason`，查看lsp服务器安装状态
+然后重启你的 Neovim。重启后，运行 `:Mason`，查看 lsp 服务器安装状态
 
 ### 3.3 lazydev 插件（可选）
 
-现在虽然 LSP 已经能用了，但是有一堆 undefined，自动补全也不支持 Neovim 自带的函数。[lazydev](https://github.com/folke/lazydev.nvim) 插件可以为lua语言提供这些功能，其他有些语言也有相应的功能增强插件，比如 [mrcjkb/rustaceanvim](https://github.com/mrcjkb/rustaceanvim) 用于 Rust 语言。
+现在虽然 LSP 已经能用了，但是有一堆 undefined，自动补全也不支持 Neovim 自带的函数。[lazydev](https://github.com/folke/lazydev.nvim) 插件可以为 lua 语言提供这些功能，其他有些语言也有相应的功能增强插件，比如 [mrcjkb/rustaceanvim](https://github.com/mrcjkb/rustaceanvim) 用于 Rust 语言。
 
 > [!NOTE]
-> 如果使用此插件，请删除 `lsp.lua` 中的 `vim.lsp.enable('lua_ls')`，因为插件会自动调用这个函数.
+> 如果使用此插件，请删除 `lsp.lua` 中的 `vim.lsp.enable('lua_ls')`，因为插件会自动调用这个函数。
 
 示例配置：
 
@@ -461,7 +461,7 @@ vim.lsp.enable('lua_ls')
 - 如果遇到问题，请先尝试 `:checkhealth vim.lsp`，查看配置是否出错
 - 如果使用 lazydev 插件，请删除 `lsp.lua` 中的 `vim.lsp.enable('lua_ls')`，因为插件会自动调用这个函数
 
-之后可能再出一篇教程，讲讲如何配置vue和rust。[我的配置仓库](https://github.com/OakChaser/nvim-config)
+之后可能再出一篇教程，讲讲如何配置 vue 和 rust。[我的配置仓库](https://github.com/OakChaser/nvim-config)
 
 <p style="text-align: center">
 希望这篇文章能帮到你~

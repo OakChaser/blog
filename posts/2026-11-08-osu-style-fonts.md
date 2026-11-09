@@ -7,6 +7,7 @@ minutes: 2
 date: "2026-11-08"
 tags:
     - Fonts
+    - Memorandum
 ---
 
 osu! 使用 Torus 作为其 UI 字体，但这是商用字体，要在自己的项目中使用就需要购买授权。

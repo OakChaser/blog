@@ -6,7 +6,7 @@ minutes: 3
 date: "2025-05-03"
 tags:
     - Technical
-    - Note
+    - Memorandum
     - Android
 ---
 

@@ -45,7 +45,6 @@ export default defineConfig({
         nav: [
             { text: "Notes", link: "https://notes.oakchaser.me" },
             { text: "About", link: "/about" },
-            { text: "Archive", link: "/archive" },
             { text: "Random", link: "/random" },
         ],
         socialLinks: [{ icon: "github", link: "https://github.com/OakChaser/" }],

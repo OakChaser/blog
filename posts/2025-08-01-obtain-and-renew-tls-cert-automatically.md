@@ -9,6 +9,7 @@ date: "2025-08-01"
 tags:
     - Technical
     - Tutor
+    - Memorandum
     - Web
 ---
 
